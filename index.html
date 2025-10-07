@@ -3,128 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForeverLink.love - 生活的永恒链接</title>
+    <title>ForeverLink.love - 永恒的连接</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- 字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 3D 记忆网络背景 -->
-    <canvas id="memory-network"></canvas>
-    
-    <!-- 时间流动层 -->
-    <div id="time-flow"></div>
-    
     <!-- 主容器 -->
-    <div class="container">
-        <!-- 标题区域 -->
-        <header class="header">
-            <h1 class="title">Forever<span class="highlight">Link</span></h1>
-            <p class="subtitle">生活的点滴，串联成永恒的记忆链</p>
-        </header>
-        
-        <!-- 时间轴主体 -->
-        <div class="timeline-container" id="timelineContainer">
-            <!-- 中央连接线 -->
-            <div class="connection-line"></div>
-            
-            <!-- 记忆节点将动态生成 -->
-            <div class="memory-nodes" id="memoryNodes"></div>
+    <div class="main-container">
+        <!-- 动态Logo区域 -->
+        <div class="logo-section">
+            <svg class="morphing-logo" width="600" height="200" viewBox="0 0 600 200">
+                <defs>
+                    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path class="logo-path" d="" fill="url(#logo-gradient)"/>
+            </svg>
+            <h1 class="logo-text">
+                <span class="letter">F</span>
+                <span class="letter">o</span>
+                <span class="letter">r</span>
+                <span class="letter">e</span>
+                <span class="letter">v</span>
+                <span class="letter">e</span>
+                <span class="letter">r</span>
+                <span class="letter">L</span>
+                <span class="letter">i</span>
+                <span class="letter">n</span>
+                <span class="letter">k</span>
+            </h1>
         </div>
-        
-        <!-- 交互式记忆创建器 -->
-        <div class="memory-creator">
-            <button class="add-memory-btn" id="addMemoryBtn">
-                <span class="btn-text">添加记忆片段</span>
-                <span class="btn-icon">+</span>
-            </button>
-        </div>
-        
-        <!-- 记忆详情查看器 -->
-        <div class="memory-viewer" id="memoryViewer">
-            <div class="viewer-content">
-                <div class="viewer-date"></div>
-                <div class="viewer-title"></div>
-                <div class="viewer-description"></div>
-                <div class="viewer-connections"></div>
+
+        <!-- 网格动画区域 -->
+        <div class="grid-section">
+            <div class="dots-grid" id="dotsGrid"></div>
+            <div class="grid-content">
+                <h2 class="grid-title">生活的每个节点</h2>
+                <p class="grid-subtitle">都在创造永恒的连接</p>
             </div>
         </div>
-        
-        <!-- 浮动的记忆碎片 -->
-        <div class="floating-memories" id="floatingMemories"></div>
-        
-        <!-- 连接可视化层 -->
-        <svg class="connections-svg" id="connectionsSvg">
+
+        <!-- 交互式演示区 -->
+        <div class="demo-section">
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <button class="demo-btn" data-animation="stagger">涟漪扩散</button>
+                    <button class="demo-btn" data-animation="morph">形态变换</button>
+                    <button class="demo-btn" data-animation="chain">链式反应</button>
+                    <button class="demo-btn" data-animation="explode">粒子爆炸</button>
+                    <button class="demo-btn" data-animation="wave">波浪传递</button>
+                </div>
+                <div class="demo-stage" id="demoStage">
+                    <div class="demo-elements" id="demoElements"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 时间线动画 -->
+        <div class="timeline-section">
+            <div class="timeline-track" id="timelineTrack">
+                <div class="timeline-progress"></div>
+                <div class="timeline-items"></div>
+            </div>
+        </div>
+
+        <!-- 3D方块矩阵 -->
+        <div class="cube-section">
+            <div class="cube-grid" id="cubeGrid"></div>
+        </div>
+
+        <!-- 连接线动画 -->
+        <svg class="connection-svg" id="connectionSvg">
             <defs>
-                <linearGradient id="link-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#6B46C1;stop-opacity:0.6" />
-                    <stop offset="50%" style="stop-color:#9333EA;stop-opacity:0.8" />
-                    <stop offset="100%" style="stop-color:#6B46C1;stop-opacity:0.6" />
-                </linearGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
             </defs>
         </svg>
-    </div>
-    
-    <!-- 记忆输入模态框 -->
-    <div class="modal" id="memoryModal">
-        <div class="modal-content">
-            <h2>记录生活片段</h2>
-            <form id="memoryForm">
-                <div class="form-group">
-                    <label>日期</label>
-                    <input type="date" id="memoryDate" required>
-                </div>
-                <div class="form-group">
-                    <label>标题</label>
-                    <input type="text" id="memoryTitle" placeholder="给这个记忆起个名字..." required>
-                </div>
-                <div class="form-group">
-                    <label>类型</label>
-                    <select id="memoryType">
-                        <option value="moment">瞬间</option>
-                        <option value="milestone">里程碑</option>
-                        <option value="daily">日常</option>
-                        <option value="travel">旅行</option>
-                        <option value="celebration">庆祝</option>
-                        <option value="challenge">挑战</option>
-                        <option value="growth">成长</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>描述</label>
-                    <textarea id="memoryDescription" rows="4" placeholder="记录这个时刻的细节..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>关联标签（用逗号分隔）</label>
-                    <input type="text" id="memoryTags" placeholder="例如：咖啡, 雨天, 音乐">
-                </div>
-                <div class="form-buttons">
-                    <button type="button" class="btn-cancel" id="cancelMemory">取消</button>
-                    <button type="submit" class="btn-save">保存记忆</button>
-                </div>
-            </form>
+
+        <!-- 悬浮控制面板 -->
+        <div class="control-panel">
+            <div class="panel-header">动画控制</div>
+            <div class="panel-controls">
+                <label class="control-item">
+                    <span>动画速度</span>
+                    <input type="range" id="speedControl" min="0.1" max="3" value="1" step="0.1">
+                </label>
+                <label class="control-item">
+                    <span>粒子密度</span>
+                    <input type="range" id="densityControl" min="10" max="100" value="50">
+                </label>
+                <label class="control-item">
+                    <span>连接强度</span>
+                    <input type="range" id="connectionControl" min="0" max="100" value="50">
+                </label>
+            </div>
+            <button class="reset-btn" id="resetAnimation">重置动画</button>
+        </div>
+
+        <!-- 鼠标跟随效果 -->
+        <div class="cursor-follower" id="cursorFollower">
+            <div class="cursor-ring"></div>
+            <div class="cursor-dot"></div>
         </div>
     </div>
-    
-    <!-- 欢迎引导 -->
-    <div class="welcome-guide" id="welcomeGuide">
-        <div class="guide-content">
-            <h2>欢迎来到 ForeverLink</h2>
-            <p>每一个记忆都是生活的节点<br>每一条连接都是情感的延续</p>
-            <p class="guide-instruction">点击"添加记忆片段"开始记录你的故事</p>
-            <button class="guide-close" id="closeGuide">开始探索</button>
-        </div>
-    </div>
-    
+
+    <!-- 背景Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
     <!-- 脚本 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-    <script src="memory-system.js"></script>
-    <script src="visual-effects.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anime/3.2.1/anime.min.js"></script>
+    <script src="anime-effects.js"></script>
 </body>
 </html>

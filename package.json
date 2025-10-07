@@ -1,0 +1,25 @@
+{
+  "name": "foreverlink-love",
+  "version": "1.0.0",
+  "description": "ForeverLink.love - 爱的永恒链接，使用最激进的前端动画库创建的浪漫主题页面",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "serve": "npx live-server --port=8080"
+  },
+  "keywords": [
+    "love",
+    "animation",
+    "3d",
+    "particles",
+    "gsap",
+    "threejs",
+    "romantic"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

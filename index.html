@@ -1,75 +1,123 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForeverLink - Anime.js Showcase</title>
+    <title>anime.js</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 主标题动画 -->
+    <!-- Header -->
+    <header>
+        <nav class="nav">
+            <a href="#" class="nav-logo">anime.js</a>
+            <div class="nav-links">
+                <a href="#">Documentation</a>
+                <a href="#">Examples</a>
+                <a href="#">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Logo Animation -->
     <section class="hero">
-        <div class="title-container">
-            <h1 class="main-title">
-                <span class="letter">F</span>
-                <span class="letter">o</span>
-                <span class="letter">r</span>
-                <span class="letter">e</span>
-                <span class="letter">v</span>
-                <span class="letter">e</span>
-                <span class="letter">r</span>
-                <span class="letter">L</span>
-                <span class="letter">i</span>
-                <span class="letter">n</span>
-                <span class="letter">k</span>
-            </h1>
-            <p class="subtitle">Life Connected Forever</p>
+        <div class="logo-animation-container">
+            <svg class="logo-animation" width="280" height="280" viewBox="0 0 280 280">
+                <g class="logo-letter" stroke="currentColor" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                </g>
+            </svg>
         </div>
+        <h1 class="hero-title">
+            <span class="letter">a</span>
+            <span class="letter">n</span>
+            <span class="letter">i</span>
+            <span class="letter">m</span>
+            <span class="letter">e</span>
+            <span class="letter">.</span>
+            <span class="letter">j</span>
+            <span class="letter">s</span>
+        </h1>
+        <p class="hero-subtitle">JavaScript animation engine</p>
     </section>
 
-    <!-- 点阵网格 -->
+    <!-- Grid Animation Section -->
     <section class="grid-section">
-        <div class="grid-container"></div>
+        <div class="stagger-visualizer">
+            <div class="stagger-grid"></div>
+        </div>
     </section>
 
-    <!-- 演示卡片 -->
-    <section class="demos">
-        <div class="demo-card" id="demo1">
-            <div class="demo-content">
-                <div class="square"></div>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-demo" id="transform-demo">
+                <div class="el"></div>
             </div>
-            <h3>Transform</h3>
+            <h3>Simple</h3>
+            <p>Anime.js works with CSS properties, SVG, DOM attributes and JavaScript Objects.</p>
         </div>
         
-        <div class="demo-card" id="demo2">
-            <div class="demo-content">
-                <div class="circles-container"></div>
-            </div>
-            <h3>Stagger</h3>
-        </div>
-        
-        <div class="demo-card" id="demo3">
-            <div class="demo-content">
-                <div class="timeline-dots"></div>
-            </div>
-            <h3>Timeline</h3>
-        </div>
-        
-        <div class="demo-card" id="demo4">
-            <div class="demo-content">
-                <svg class="morph-svg" viewBox="0 0 100 100">
-                    <path class="morph-path" d="M 25,50 Q 50,25 75,50 T 25,50" />
+        <div class="feature-card">
+            <div class="feature-demo" id="morph-demo">
+                <svg viewBox="0 0 100 100">
+                    <path class="morph-path" d="M 10,50 Q 25,10 40,50 T 70,50 T 100,50" stroke="currentColor" stroke-width="2" fill="none"/>
                 </svg>
             </div>
-            <h3>SVG Morph</h3>
+            <h3>Powerful</h3>
+            <p>Built-in staggering system, timeline, playback controls, and callbacks.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-demo" id="timeline-demo">
+                <div class="timeline-el"></div>
+                <div class="timeline-el"></div>
+                <div class="timeline-el"></div>
+            </div>
+            <h3>Flexible</h3>
+            <p>Animate anything with a numerical value, in any unit.</p>
         </div>
     </section>
 
-    <!-- 交互区域 -->
-    <section class="interactive">
-        <div class="interactive-container">
-            <div class="follow-cursor"></div>
-            <div class="click-ripple"></div>
+    <!-- Interactive Demo Section -->
+    <section class="interactive-demo">
+        <div class="demo-controls">
+            <button class="demo-btn active" data-demo="basic">Basic</button>
+            <button class="demo-btn" data-demo="stagger">Stagger</button>
+            <button class="demo-btn" data-demo="timeline">Timeline</button>
+            <button class="demo-btn" data-demo="easing">Easing</button>
+        </div>
+        <div class="demo-stage">
+            <div class="demo-content" id="basic-demo">
+                <div class="basic-square"></div>
+            </div>
+            <div class="demo-content" id="stagger-demo" style="display:none;">
+                <div class="stagger-container"></div>
+            </div>
+            <div class="demo-content" id="timeline-demo-stage" style="display:none;">
+                <div class="timeline-container"></div>
+            </div>
+            <div class="demo-content" id="easing-demo" style="display:none;">
+                <div class="easing-grid"></div>
+            </div>
+        </div>
+        <div class="code-preview">
+            <pre><code id="code-display">anime({
+  targets: '.basic-square',
+  translateX: 250,
+  rotate: '1turn',
+  backgroundColor: '#FFF',
+  duration: 800
+});</code></pre>
+        </div>
+    </section>
+
+    <!-- Layered Animations Section -->
+    <section class="layered-section">
+        <div class="layered-animations">
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3"></div>
         </div>
     </section>
 

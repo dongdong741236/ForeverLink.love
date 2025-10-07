@@ -1,196 +1,460 @@
-// ===== 1. 标题字母动画 =====
-anime.timeline()
-    .add({
-        targets: '.main-title .letter',
-        translateY: [-100, 0],
-        opacity: [0, 1],
-        easing: 'easeOutExpo',
-        duration: 1400,
-        delay: (el, i) => 30 * i
-    })
-    .add({
-        targets: '.subtitle',
-        opacity: [0, 1],
-        translateY: [20, 0],
-        easing: 'easeOutExpo',
-        duration: 1000
-    }, '-=600');
+// ==========================================
+// ANIME.JS OFFICIAL WEBSITE RECREATION
+// ==========================================
 
-// ===== 2. 网格点阵动画 =====
-function createGrid() {
-    const container = document.querySelector('.grid-container');
-    const cols = 20;
-    const rows = 10;
+// ------------------------------------------
+// 1. LOGO ANIMATION (Like official site)
+// ------------------------------------------
+function initLogoAnimation() {
+    const logoEl = document.querySelector('.logo-letter');
     
-    for (let i = 0; i < cols * rows; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('grid-dot');
-        container.appendChild(dot);
-    }
+    // Create the animated line drawings
+    const paths = [
+        'M 70 140 L 140 70 L 210 140',
+        'M 70 140 L 140 210 L 210 140',
+    ];
     
-    // 波浪动画
-    anime({
-        targets: '.grid-dot',
-        scale: [
-            {value: 0, duration: 0},
-            {value: 1.2, duration: 500},
-            {value: 1, duration: 500}
-        ],
-        translateY: [
-            {value: -20, duration: 500},
-            {value: 0, duration: 500}
-        ],
-        delay: anime.stagger(50, {grid: [cols, rows], from: 'center'}),
-        loop: true,
-        easing: 'easeInOutSine'
+    paths.forEach((d, i) => {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.style.opacity = '0';
+        logoEl.appendChild(path);
     });
-}
-
-// ===== 3. Demo 1: 变形动画 =====
-anime({
-    targets: '.square',
-    rotate: '1turn',
-    borderRadius: ['0%', '50%'],
-    duration: 2000,
-    loop: true,
-    direction: 'alternate',
-    easing: 'easeInOutQuad'
-});
-
-// ===== 4. Demo 2: 交错动画 =====
-function createCircles() {
-    const container = document.querySelector('.circles-container');
-    for (let i = 0; i < 5; i++) {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        container.appendChild(circle);
-    }
     
-    anime({
-        targets: '.circle',
-        translateY: -30,
-        scale: [1, 1.5],
-        duration: 800,
-        delay: anime.stagger(100),
-        loop: true,
-        direction: 'alternate',
-        easing: 'easeInOutSine'
-    });
-}
-
-// ===== 5. Demo 3: 时间线动画 =====
-function createTimeline() {
-    const container = document.querySelector('.timeline-dots');
-    for (let i = 0; i < 5; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('timeline-dot');
-        container.appendChild(dot);
-    }
-    
+    // Animate logo paths
     anime.timeline({loop: true})
         .add({
-            targets: '.timeline-dot',
-            scale: [0, 1.5],
-            duration: 500,
-            delay: anime.stagger(100),
-            easing: 'easeOutElastic(1, .5)'
+            targets: '.logo-letter path',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            opacity: [0, 1],
+            easing: 'easeInOutSine',
+            duration: 1500,
+            delay: (el, i) => i * 250
         })
         .add({
-            targets: '.timeline-dot',
-            scale: 1,
-            duration: 300,
-            delay: anime.stagger(100),
+            targets: '.logo-letter path',
+            opacity: 0,
+            duration: 1000,
+            easing: 'easeInOutSine',
+            delay: 1000
+        });
+}
+
+// ------------------------------------------
+// 2. HERO TITLE ANIMATION
+// ------------------------------------------
+function initHeroAnimation() {
+    // Letter by letter animation
+    anime.timeline()
+        .add({
+            targets: '.hero-title .letter',
+            scale: [4, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: 'easeOutExpo',
+            duration: 950,
+            delay: (el, i) => 70 * i
+        })
+        .add({
+            targets: '.hero-subtitle',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            easing: 'easeOutExpo',
+            duration: 800
+        }, '-=600');
+}
+
+// ------------------------------------------
+// 3. STAGGER GRID VISUALIZATION
+// ------------------------------------------
+function initStaggerGrid() {
+    const gridContainer = document.querySelector('.stagger-grid');
+    const fragment = document.createDocumentFragment();
+    const columns = Math.floor(gridContainer.offsetWidth / 30);
+    const rows = 10;
+    const numberOfElements = columns * rows;
+    
+    for (let i = 0; i < numberOfElements; i++) {
+        const el = document.createElement('div');
+        el.classList.add('el');
+        fragment.appendChild(el);
+    }
+    
+    gridContainer.appendChild(fragment);
+    
+    // Stagger animation from center
+    anime({
+        targets: '.stagger-grid .el',
+        scale: [
+            {value: 0, duration: 0},
+            {value: 1, duration: 500, easing: 'easeOutSine'},
+            {value: 0, duration: 500, easing: 'easeInSine'}
+        ],
+        delay: anime.stagger(50, {grid: [columns, rows], from: 'center'}),
+        loop: true,
+        loopDelay: 1000
+    });
+}
+
+// ------------------------------------------
+// 4. FEATURE DEMOS
+// ------------------------------------------
+function initFeatureDemos() {
+    // Transform demo
+    anime({
+        targets: '#transform-demo .el',
+        translateX: [
+            {value: 100, duration: 1000},
+            {value: 0, duration: 1000}
+        ],
+        rotate: [
+            {value: '1turn', duration: 1000},
+            {value: '0turn', duration: 1000}
+        ],
+        borderRadius: [
+            {value: '50%', duration: 500},
+            {value: '4px', duration: 500}
+        ],
+        delay: 500,
+        loop: true,
+        easing: 'easeInOutQuad'
+    });
+    
+    // SVG Morph demo
+    const morphPath = document.querySelector('.morph-path');
+    anime({
+        targets: morphPath,
+        d: [
+            {value: 'M 10,50 Q 25,10 40,50 T 70,50 T 100,50'},
+            {value: 'M 10,50 Q 25,90 40,50 T 70,50 T 100,50'}
+        ],
+        duration: 2000,
+        loop: true,
+        direction: 'alternate',
+        easing: 'easeInOutQuad'
+    });
+    
+    // Timeline demo
+    const tl = anime.timeline({
+        loop: true,
+        direction: 'alternate'
+    });
+    
+    tl.add({
+        targets: '.timeline-el',
+        translateX: 50,
+        scale: [1, 1.5],
+        duration: 500,
+        delay: anime.stagger(100),
+        easing: 'easeInOutQuad'
+    })
+    .add({
+        targets: '.timeline-el',
+        rotate: '1turn',
+        duration: 500,
+        delay: anime.stagger(100),
+        easing: 'easeInOutQuad'
+    }, '-=400');
+}
+
+// ------------------------------------------
+// 5. INTERACTIVE DEMO SECTION
+// ------------------------------------------
+function initInteractiveDemo() {
+    const buttons = document.querySelectorAll('.demo-btn');
+    const demos = document.querySelectorAll('.demo-content');
+    const codeDisplay = document.getElementById('code-display');
+    
+    // Code snippets for each demo
+    const codeSnippets = {
+        basic: `anime({
+  targets: '.basic-square',
+  translateX: 250,
+  rotate: '1turn',
+  backgroundColor: '#FFF',
+  duration: 800
+});`,
+        stagger: `anime({
+  targets: '.stagger-el',
+  translateX: 270,
+  delay: anime.stagger(100),
+  easing: 'easeOutElastic(1, .8)',
+  loop: true
+});`,
+        timeline: `anime.timeline({loop: true})
+  .add({
+    targets: '.timeline-item',
+    translateX: 270,
+    duration: 800
+  })
+  .add({
+    targets: '.timeline-item',
+    rotate: 360,
+    duration: 800
+  }, '-=600');`,
+        easing: `anime({
+  targets: '.easing-ball',
+  translateX: 270,
+  easing: function(i) {
+    return ['linear', 'easeInQuad', 'easeOutQuad', 
+            'easeInOutQuad', 'easeOutElastic'][i];
+  },
+  delay: anime.stagger(100),
+  loop: true
+});`
+    };
+    
+    // Button click handlers
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const demoType = btn.dataset.demo;
+            
+            // Update active button
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update demo content
+            demos.forEach(d => d.style.display = 'none');
+            const targetDemo = document.getElementById(`${demoType}-demo`);
+            if (targetDemo) targetDemo.style.display = 'flex';
+            
+            // Update code display
+            codeDisplay.textContent = codeSnippets[demoType];
+            
+            // Run the demo
+            runDemo(demoType);
+        });
+    });
+    
+    // Initialize demos
+    initBasicDemo();
+    initStaggerDemo();
+    initTimelineDemo();
+    initEasingDemo();
+}
+
+function runDemo(type) {
+    switch(type) {
+        case 'basic':
+            runBasicDemo();
+            break;
+        case 'stagger':
+            runStaggerDemo();
+            break;
+        case 'timeline':
+            runTimelineDemo();
+            break;
+        case 'easing':
+            runEasingDemo();
+            break;
+    }
+}
+
+function initBasicDemo() {
+    // Basic animation demo - runs continuously
+    anime({
+        targets: '.basic-square',
+        translateX: [0, 200, 0],
+        rotate: [0, '1turn', '0turn'],
+        backgroundColor: [
+            {value: '#FF1461'},
+            {value: '#FFF'},
+            {value: '#FF1461'}
+        ],
+        duration: 2000,
+        loop: true,
+        easing: 'easeInOutQuad'
+    });
+}
+
+function runBasicDemo() {
+    anime.remove('.basic-square');
+    anime({
+        targets: '.basic-square',
+        translateX: [0, 200, 0],
+        rotate: [0, '1turn', '0turn'],
+        backgroundColor: [
+            {value: '#FF1461'},
+            {value: '#FFF'},
+            {value: '#FF1461'}
+        ],
+        duration: 2000,
+        loop: true,
+        easing: 'easeInOutQuad'
+    });
+}
+
+function initStaggerDemo() {
+    const container = document.querySelector('.stagger-container');
+    container.innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+        const el = document.createElement('div');
+        el.classList.add('stagger-el');
+        container.appendChild(el);
+    }
+}
+
+function runStaggerDemo() {
+    anime.remove('.stagger-el');
+    anime({
+        targets: '.stagger-el',
+        translateX: [0, 200, 0],
+        scale: [1, 1.5, 1],
+        delay: anime.stagger(100),
+        duration: 1500,
+        loop: true,
+        easing: 'easeOutElastic(1, .8)'
+    });
+}
+
+function initTimelineDemo() {
+    const container = document.querySelector('.timeline-container');
+    container.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+        const el = document.createElement('div');
+        el.classList.add('timeline-item');
+        container.appendChild(el);
+    }
+}
+
+function runTimelineDemo() {
+    anime.remove('.timeline-item');
+    anime.timeline({loop: true})
+        .add({
+            targets: '.timeline-item',
+            translateX: 200,
+            duration: 800,
+            easing: 'easeOutQuad'
+        })
+        .add({
+            targets: '.timeline-item',
+            rotate: 360,
+            duration: 800,
+            easing: 'easeInOutQuad'
+        }, '-=600')
+        .add({
+            targets: '.timeline-item',
+            translateX: 0,
+            rotate: 0,
+            duration: 800,
             easing: 'easeInQuad'
         });
 }
 
-// ===== 6. Demo 4: SVG路径变形 =====
-const morphPaths = [
-    "M 25,50 Q 50,25 75,50 T 25,50",
-    "M 20,50 L 50,20 L 80,50 L 50,80 Z",
-    "M 30,50 Q 50,30 70,50 Q 50,70 30,50"
-];
-
-let pathIndex = 0;
-function morphSVG() {
-    anime({
-        targets: '.morph-path',
-        d: [{value: morphPaths[pathIndex]}],
-        duration: 1500,
-        easing: 'easeInOutQuad',
-        complete: function() {
-            pathIndex = (pathIndex + 1) % morphPaths.length;
-            setTimeout(morphSVG, 500);
-        }
+function initEasingDemo() {
+    const container = document.querySelector('.easing-grid');
+    container.innerHTML = '';
+    const easings = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeOutElastic'];
+    easings.forEach(() => {
+        const el = document.createElement('div');
+        el.classList.add('easing-ball');
+        container.appendChild(el);
     });
 }
 
-// ===== 7. 鼠标跟随效果 =====
-const interactiveSection = document.querySelector('.interactive');
-const cursor = document.querySelector('.follow-cursor');
-
-interactiveSection.addEventListener('mousemove', (e) => {
-    const rect = interactiveSection.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+function runEasingDemo() {
+    anime.remove('.easing-ball');
+    const easings = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeOutElastic'];
     
-    cursor.style.left = x + 'px';
-    cursor.style.top = y + 'px';
-});
+    document.querySelectorAll('.easing-ball').forEach((ball, i) => {
+        anime({
+            targets: ball,
+            translateX: [0, 200, 0],
+            duration: 2000,
+            delay: i * 100,
+            easing: easings[i],
+            loop: true
+        });
+    });
+}
 
-// ===== 8. 点击涟漪效果 =====
-interactiveSection.addEventListener('click', (e) => {
-    const rect = interactiveSection.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const ripple = document.createElement('div');
-    ripple.classList.add('ripple');
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    interactiveSection.appendChild(ripple);
+// ------------------------------------------
+// 6. LAYERED ANIMATIONS
+// ------------------------------------------
+function initLayeredAnimations() {
+    anime({
+        targets: '.layer-1',
+        scale: [1, 1.5, 1],
+        opacity: [0.1, 0.3, 0.1],
+        duration: 4000,
+        loop: true,
+        easing: 'easeInOutSine'
+    });
     
     anime({
-        targets: ripple,
-        width: [0, 300],
-        height: [0, 300],
-        opacity: [1, 0],
-        duration: 1000,
-        easing: 'easeOutExpo',
-        complete: function() {
-            ripple.remove();
-        }
+        targets: '.layer-2',
+        scale: [1, 1.3, 1],
+        opacity: [0.05, 0.15, 0.05],
+        duration: 5000,
+        loop: true,
+        easing: 'easeInOutSine',
+        delay: 500
     });
-});
-
-// ===== 初始化所有动画 =====
-document.addEventListener('DOMContentLoaded', () => {
-    createGrid();
-    createCircles();
-    createTimeline();
-    setTimeout(morphSVG, 1000);
     
-    // 滚动触发动画
+    anime({
+        targets: '.layer-3',
+        scale: [1, 1.2, 1],
+        opacity: [0.02, 0.08, 0.02],
+        duration: 6000,
+        loop: true,
+        easing: 'easeInOutSine',
+        delay: 1000
+    });
+}
+
+// ------------------------------------------
+// 7. SCROLL ANIMATIONS
+// ------------------------------------------
+function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 当元素进入视口时触发动画
-                if (entry.target.classList.contains('demo-card')) {
+                entry.target.classList.add('in-view');
+                
+                if (entry.target.classList.contains('feature-card')) {
                     anime({
                         targets: entry.target,
                         translateY: [50, 0],
                         opacity: [0, 1],
                         duration: 800,
-                        easing: 'easeOutExpo'
+                        easing: 'easeOutQuad'
                     });
                 }
             }
         });
-    }, {threshold: 0.3});
+    }, {threshold: 0.2});
     
-    document.querySelectorAll('.demo-card').forEach(card => {
-        observer.observe(card);
+    document.querySelectorAll('.feature-card, section').forEach(el => {
+        observer.observe(el);
     });
+}
+
+// ------------------------------------------
+// INITIALIZATION
+// ------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    initLogoAnimation();
+    initHeroAnimation();
     
-    console.log('✨ Anime.js 动画系统启动成功！');
+    // Initialize grid when in view
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('initialized')) {
+                initStaggerGrid();
+                entry.target.classList.add('initialized');
+            }
+        });
+    }, {threshold: 0.1});
+    
+    const gridSection = document.querySelector('.grid-section');
+    if (gridSection) {
+        gridObserver.observe(gridSection);
+    }
+    
+    initFeatureDemos();
+    initInteractiveDemo();
+    initLayeredAnimations();
+    initScrollAnimations();
+    
+    console.log('anime.js website recreation initialized');
 });

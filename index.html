@@ -3,26 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForeverLink.love - 永恒的连接</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
+    <title>ForeverLink - Anime.js Showcase</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 主容器 -->
-    <div class="main-container">
-        <!-- 动态Logo区域 -->
-        <div class="logo-section">
-            <svg class="morphing-logo" width="600" height="200" viewBox="0 0 600 200">
-                <defs>
-                    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <path class="logo-path" d="" fill="url(#logo-gradient)"/>
-            </svg>
-            <h1 class="logo-text">
+    <!-- 主标题动画 -->
+    <section class="hero">
+        <div class="title-container">
+            <h1 class="main-title">
                 <span class="letter">F</span>
                 <span class="letter">o</span>
                 <span class="letter">r</span>
@@ -35,91 +23,57 @@
                 <span class="letter">n</span>
                 <span class="letter">k</span>
             </h1>
+            <p class="subtitle">Life Connected Forever</p>
         </div>
+    </section>
 
-        <!-- 网格动画区域 -->
-        <div class="grid-section">
-            <div class="dots-grid" id="dotsGrid"></div>
-            <div class="grid-content">
-                <h2 class="grid-title">生活的每个节点</h2>
-                <p class="grid-subtitle">都在创造永恒的连接</p>
+    <!-- 点阵网格 -->
+    <section class="grid-section">
+        <div class="grid-container"></div>
+    </section>
+
+    <!-- 演示卡片 -->
+    <section class="demos">
+        <div class="demo-card" id="demo1">
+            <div class="demo-content">
+                <div class="square"></div>
             </div>
+            <h3>Transform</h3>
         </div>
-
-        <!-- 交互式演示区 -->
-        <div class="demo-section">
-            <div class="demo-container">
-                <div class="demo-controls">
-                    <button class="demo-btn" data-animation="stagger">涟漪扩散</button>
-                    <button class="demo-btn" data-animation="morph">形态变换</button>
-                    <button class="demo-btn" data-animation="chain">链式反应</button>
-                    <button class="demo-btn" data-animation="explode">粒子爆炸</button>
-                    <button class="demo-btn" data-animation="wave">波浪传递</button>
-                </div>
-                <div class="demo-stage" id="demoStage">
-                    <div class="demo-elements" id="demoElements"></div>
-                </div>
+        
+        <div class="demo-card" id="demo2">
+            <div class="demo-content">
+                <div class="circles-container"></div>
             </div>
+            <h3>Stagger</h3>
         </div>
-
-        <!-- 时间线动画 -->
-        <div class="timeline-section">
-            <div class="timeline-track" id="timelineTrack">
-                <div class="timeline-progress"></div>
-                <div class="timeline-items"></div>
+        
+        <div class="demo-card" id="demo3">
+            <div class="demo-content">
+                <div class="timeline-dots"></div>
             </div>
+            <h3>Timeline</h3>
         </div>
-
-        <!-- 3D方块矩阵 -->
-        <div class="cube-section">
-            <div class="cube-grid" id="cubeGrid"></div>
-        </div>
-
-        <!-- 连接线动画 -->
-        <svg class="connection-svg" id="connectionSvg">
-            <defs>
-                <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-            </defs>
-        </svg>
-
-        <!-- 悬浮控制面板 -->
-        <div class="control-panel">
-            <div class="panel-header">动画控制</div>
-            <div class="panel-controls">
-                <label class="control-item">
-                    <span>动画速度</span>
-                    <input type="range" id="speedControl" min="0.1" max="3" value="1" step="0.1">
-                </label>
-                <label class="control-item">
-                    <span>粒子密度</span>
-                    <input type="range" id="densityControl" min="10" max="100" value="50">
-                </label>
-                <label class="control-item">
-                    <span>连接强度</span>
-                    <input type="range" id="connectionControl" min="0" max="100" value="50">
-                </label>
+        
+        <div class="demo-card" id="demo4">
+            <div class="demo-content">
+                <svg class="morph-svg" viewBox="0 0 100 100">
+                    <path class="morph-path" d="M 25,50 Q 50,25 75,50 T 25,50" />
+                </svg>
             </div>
-            <button class="reset-btn" id="resetAnimation">重置动画</button>
+            <h3>SVG Morph</h3>
         </div>
+    </section>
 
-        <!-- 鼠标跟随效果 -->
-        <div class="cursor-follower" id="cursorFollower">
-            <div class="cursor-ring"></div>
-            <div class="cursor-dot"></div>
+    <!-- 交互区域 -->
+    <section class="interactive">
+        <div class="interactive-container">
+            <div class="follow-cursor"></div>
+            <div class="click-ripple"></div>
         </div>
-    </div>
+    </section>
 
-    <!-- 背景Canvas -->
-    <canvas id="bgCanvas"></canvas>
-
-    <!-- 脚本 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/anime/3.2.1/anime.min.js"></script>
-    <script src="anime-effects.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

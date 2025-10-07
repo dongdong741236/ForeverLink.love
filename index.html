@@ -3,140 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForeverLink.love - 爱的永恒链接</title>
+    <title>ForeverLink.love - 生活的永恒链接</title>
     <link rel="stylesheet" href="styles.css">
     
     <!-- 字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
 </head>
 <body>
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
+    <!-- 3D 记忆网络背景 -->
+    <canvas id="memory-network"></canvas>
     
-    <!-- 3D Canvas -->
-    <canvas id="three-canvas"></canvas>
+    <!-- 时间流动层 -->
+    <div id="time-flow"></div>
     
-    <!-- 主内容 -->
+    <!-- 主容器 -->
     <div class="container">
-        <!-- 标题动画 -->
-        <div class="title-section">
-            <h1 class="main-title">
-                <span class="letter">F</span>
-                <span class="letter">o</span>
-                <span class="letter">r</span>
-                <span class="letter">e</span>
-                <span class="letter">v</span>
-                <span class="letter">e</span>
-                <span class="letter">r</span>
-                <span class="heart-icon">❤️</span>
-                <span class="letter">L</span>
-                <span class="letter">i</span>
-                <span class="letter">n</span>
-                <span class="letter">k</span>
-            </h1>
-            <p class="subtitle">爱的永恒链接</p>
+        <!-- 标题区域 -->
+        <header class="header">
+            <h1 class="title">Forever<span class="highlight">Link</span></h1>
+            <p class="subtitle">生活的点滴，串联成永恒的记忆链</p>
+        </header>
+        
+        <!-- 时间轴主体 -->
+        <div class="timeline-container" id="timelineContainer">
+            <!-- 中央连接线 -->
+            <div class="connection-line"></div>
+            
+            <!-- 记忆节点将动态生成 -->
+            <div class="memory-nodes" id="memoryNodes"></div>
         </div>
         
-        <!-- 3D心形链接 -->
-        <div class="heart-container">
-            <div class="heart-wrapper">
-                <div class="heart heart-left">
-                    <div class="heart-inner"></div>
-                </div>
-                <div class="chain-container">
-                    <svg class="chain" viewBox="0 0 400 100">
-                        <path id="chain-path" d="M 50 50 Q 200 20 350 50" fill="none" stroke="url(#gradient)" stroke-width="3"/>
-                        <defs>
-                            <linearGradient id="gradient">
-                                <stop offset="0%" stop-color="#ff6b9d"/>
-                                <stop offset="50%" stop-color="#ffd93d"/>
-                                <stop offset="100%" stop-color="#ff6b9d"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- 链条元素 -->
-                        <g class="chain-links"></g>
-                    </svg>
-                </div>
-                <div class="heart heart-right">
-                    <div class="heart-inner"></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 无限符号 -->
-        <div class="infinity-container">
-            <svg class="infinity" viewBox="0 0 200 80">
-                <path d="M 50,40 C 50,20 30,20 30,40 C 30,60 50,60 50,40 C 50,60 70,60 70,40 C 70,20 50,20 50,40 
-                         C 50,40 130,40 130,40 C 130,20 110,20 110,40 C 110,60 130,60 130,40 C 130,60 150,60 150,40 C 150,20 130,20 130,40"
-                      stroke="url(#infinity-gradient)" stroke-width="3" fill="none"/>
-                <defs>
-                    <linearGradient id="infinity-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#e94057;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#f27121;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#e94057;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-        
-        <!-- 爱的宣言 -->
-        <div class="love-declaration">
-            <p class="declaration-text">
-                <span class="word">两颗心</span>
-                <span class="word">一条链</span>
-                <span class="word">永恒连接</span>
-                <span class="word">直到永远</span>
-            </p>
-        </div>
-        
-        <!-- 交互按钮 -->
-        <div class="interactive-section">
-            <button class="love-button" id="createLink">
-                <span class="button-text">创建永恒链接</span>
-                <span class="button-particles"></span>
+        <!-- 交互式记忆创建器 -->
+        <div class="memory-creator">
+            <button class="add-memory-btn" id="addMemoryBtn">
+                <span class="btn-text">添加记忆片段</span>
+                <span class="btn-icon">+</span>
             </button>
         </div>
         
-    <!-- 浮动爱心 -->
-    <div class="floating-hearts" id="floatingHearts"></div>
-    
-    <!-- 名字输入模态框 -->
-    <div class="modal" id="nameModal">
-        <div class="modal-content">
-            <h2>创建你们的永恒链接</h2>
-            <div class="input-group">
-                <input type="text" id="name1" placeholder="输入第一个名字" maxlength="20">
-                <span class="heart-divider">❤️</span>
-                <input type="text" id="name2" placeholder="输入第二个名字" maxlength="20">
+        <!-- 记忆详情查看器 -->
+        <div class="memory-viewer" id="memoryViewer">
+            <div class="viewer-content">
+                <div class="viewer-date"></div>
+                <div class="viewer-title"></div>
+                <div class="viewer-description"></div>
+                <div class="viewer-connections"></div>
             </div>
-            <button id="generateLink" class="generate-btn">生成永恒链接</button>
+        </div>
+        
+        <!-- 浮动的记忆碎片 -->
+        <div class="floating-memories" id="floatingMemories"></div>
+        
+        <!-- 连接可视化层 -->
+        <svg class="connections-svg" id="connectionsSvg">
+            <defs>
+                <linearGradient id="link-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#6B46C1;stop-opacity:0.6" />
+                    <stop offset="50%" style="stop-color:#9333EA;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#6B46C1;stop-opacity:0.6" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    
+    <!-- 记忆输入模态框 -->
+    <div class="modal" id="memoryModal">
+        <div class="modal-content">
+            <h2>记录生活片段</h2>
+            <form id="memoryForm">
+                <div class="form-group">
+                    <label>日期</label>
+                    <input type="date" id="memoryDate" required>
+                </div>
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" id="memoryTitle" placeholder="给这个记忆起个名字..." required>
+                </div>
+                <div class="form-group">
+                    <label>类型</label>
+                    <select id="memoryType">
+                        <option value="moment">瞬间</option>
+                        <option value="milestone">里程碑</option>
+                        <option value="daily">日常</option>
+                        <option value="travel">旅行</option>
+                        <option value="celebration">庆祝</option>
+                        <option value="challenge">挑战</option>
+                        <option value="growth">成长</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea id="memoryDescription" rows="4" placeholder="记录这个时刻的细节..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>关联标签（用逗号分隔）</label>
+                    <input type="text" id="memoryTags" placeholder="例如：咖啡, 雨天, 音乐">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn-cancel" id="cancelMemory">取消</button>
+                    <button type="submit" class="btn-save">保存记忆</button>
+                </div>
+            </form>
         </div>
     </div>
     
-    <!-- 生成的永恒链接展示 -->
-    <div class="eternal-link-display" id="eternalLinkDisplay">
-        <h3 class="link-title">你们的永恒链接</h3>
-        <div class="names-display" id="namesDisplay"></div>
-        <div class="link-url" id="linkUrl"></div>
-    </div>
-    </div>
-    
-    <!-- 光晕效果 -->
-    <div class="light-rays">
-        <div class="ray ray-1"></div>
-        <div class="ray ray-2"></div>
-        <div class="ray ray-3"></div>
-        <div class="ray ray-4"></div>
+    <!-- 欢迎引导 -->
+    <div class="welcome-guide" id="welcomeGuide">
+        <div class="guide-content">
+            <h2>欢迎来到 ForeverLink</h2>
+            <p>每一个记忆都是生活的节点<br>每一条连接都是情感的延续</p>
+            <p class="guide-instruction">点击"添加记忆片段"开始记录你的故事</p>
+            <button class="guide-close" id="closeGuide">开始探索</button>
+        </div>
     </div>
     
     <!-- 脚本 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/anime/3.2.1/anime.min.js"></script>
-    <script src="script.js"></script>
-    <script src="advanced-effects.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="memory-system.js"></script>
+    <script src="visual-effects.js"></script>
 </body>
 </html>
